@@ -12,7 +12,7 @@ import { UsersRepository } from './users.repository';
 import { JwtStrategy } from './jwt.strategy';
 import { RolesGuard } from './guards/roles.guard';
 
-const jwtConfig = config.get('jwt');
+// const jwtConfig = config.get('jwt');
 
 @Module({
   imports: [
@@ -22,13 +22,9 @@ const jwtConfig = config.get('jwt');
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret:
-          process.env.JWT_SECRET ||
-          configService.get('JWT_SECRET') ||
-          jwtConfig['secret'],
+        secret: process.env.JWT_SECRET || configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn:
-            process.env.EXPIRESIN || Number(jwtConfig['expiresIn']) || '10h',
+          expiresIn: process.env.EXPIRESIN || '10h',
         },
       }),
     }),

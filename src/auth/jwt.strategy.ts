@@ -6,9 +6,9 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtPayload } from './jwt-payload.interface';
 import { User } from './user.entity';
 import { UsersRepository } from './users.repository';
-import * as config from 'config';
+import config from 'config';
 
-const jwtConfig = config.get('jwt');
+// const jwtConfig = config.get('jwt');
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -19,9 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       secretOrKey:
-        process.env.JWT_SECRET ||
-        jwtConfig['secret'] ||
-        configService.get('JWT_SECRET'),
+        configService.get<string>('JWT_SECRET') || config.get('jwt.secret'),
       ignoreExpiration: false,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });

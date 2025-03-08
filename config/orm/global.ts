@@ -1,22 +1,29 @@
-import { ConnectionOptions } from 'typeorm';
-import * as config from 'config';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { ConfigService } from '@nestjs/config';
 import 'dotenv';
 
-const dbConfig = config.get('db');
-
-export const typeOrmConfig: ConnectionOptions = {
-  type: dbConfig['type'] || 'postgres',
-  host: process.env.DATABASE_HOST || dbConfig['host'],
-  port: process.env.DATABASE_PORT || dbConfig['port'],
-  username: process.env.DATABASE_USERNAME || dbConfig['username'],
-  password: process.env.DATABASE_PASSWORD || dbConfig['password'],
-  database: process.env.DATABASE_NAME || dbConfig['database'],
-  synchronize: process.env.TYPEORM_SYNC || dbConfig['synchronize'],
+export const getTypeOrmConfig = (
+  configService: ConfigService,
+): TypeOrmModuleOptions => ({
+  type: 'postgres',
+  host: configService.get<string>('db.host') || process.env.DATABASE_HOST,
+  port:
+    configService.get<number>('db.port') || Number(process.env.DATABASE_PORT),
+  username:
+    configService.get<string>('db.username') || process.env.DATABASE_USERNAME,
+  password:
+    configService.get<string>('db.password') || process.env.DATABASE_PASSWORD,
+  database:
+    configService.get<string>('db.database') || process.env.DATABASE_NAME,
+  synchronize:
+    configService.get<boolean>('db.synchronize') ||
+    process.env.TYPEORM_SYNC === 'true',
   migrationsRun: true,
   logging: true,
   logger: 'file',
-  migrations: [__dirname + '/migrations/**/*{.ts, .js}'],
+  migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+  autoLoadEntities: true,
   cli: {
     migrationsDir: 'src/migrations',
   },
-};
+});

@@ -1,7 +1,5 @@
-import * as config from 'config';
 import Logger from 'config/log4js/logger';
 
-const serverConfig = config.get('server');
 const logger = new Logger();
 
 export default class CorsConfig {
@@ -10,12 +8,12 @@ export default class CorsConfig {
       await app.enableCors();
     } else {
       await app.enableCors({
-        origin: serverConfig['origin'],
+        origin: process.env.ORIGIN,
       });
       logger.log(
         'app',
         'trace',
-        `accepting request from ${serverConfig['origin']}`,
+        `accepting request from ${process.env.ORIGIN}`,
         'server-request',
       );
     }

@@ -1,27 +1,26 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ScheduleModule } from '@nestjs/schedule';
-import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { typeOrmConfig } from '../config/orm/global';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EventModule } from './event/event.module';
-import { BookingModule } from './booking/booking.module';
-import { WaitlistModule } from './waitlist/waitlist.module';
-import { RolesGuard } from './auth/guards/roles.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { BullModule } from '@nestjs/bull';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { RolesGuard } from './auth/guards/roles.guard';
+import { getTypeOrmConfig } from 'config/orm/global';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({ ...typeOrmConfig, autoLoadEntities: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        getTypeOrmConfig(configService),
+    }),
     ScheduleModule.forRoot(),
     AuthModule,
-    EventModule,
-    BookingModule,
-    WaitlistModule,
     BullModule.forRoot({
       redis: {
         host: process.env.REDIS_DB_HOST,

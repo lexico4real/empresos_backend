@@ -5,7 +5,7 @@ import { TransformInterceptor } from '../config/interceptor/transform.intercepto
 import ClusterConfig from 'config/system/cluster';
 import CorsConfig from 'config/system/cors';
 import SwaggerConfig from 'config/swagger/config';
-import * as compression from 'compression';
+import compression from 'compression';
 import 'dotenv';
 
 async function bootstrap() {
