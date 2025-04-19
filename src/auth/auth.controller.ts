@@ -2,18 +2,22 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   Post,
   Query,
   Req,
+  Res,
+  Session,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Roles } from './decorators/roles.decorator';
-import { Role } from '../../common/role.enum';
-import { Request } from 'express';
+import { Role } from '@common/enums/role.enum';
+import { Request, Response } from 'express';
+import { CreateUserDto } from './dto/create-user.dto';
+import { AccessDto } from './dto/access.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -21,33 +25,61 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('register')
-  @ApiBearerAuth('token')
   @UseGuards(AuthGuard())
-  @Roles(Role.Super_Admin)
-  signUp(@Body() authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    return this.authService.signUp(authCredentialsDto);
+  @ApiBearerAuth('token')
+  createBankStaff(@Body() createUserDto: CreateUserDto): Promise<void> {
+    return this.authService.signUp(createUserDto);
   }
 
-  @Post('/signin')
-  signIn(
+  @Post('customer')
+  @ApiBearerAuth('token')
+  createCustomer(@Body() createUserDto: CreateUserDto): Promise<void> {
+    createUserDto.role = Role.CUSTOMER;
+    return this.authService.signUp(createUserDto);
+  }
+
+  @HttpCode(200)
+  @Post('otp')
+  getLoginOTP(
     @Body() authCredentialsDto: AuthCredentialsDto,
+    @Req() req: Request,
+  ) {
+    return this.authService.getLoginOTP(authCredentialsDto, req.user);
+  }
+
+  @HttpCode(200)
+  @Post('sign-in')
+  validateLoginOtp(
+    @Body() authCredentialsDto: AuthCredentialsDto,
+    @Session() session?: any,
   ): Promise<{ accessToken: string }> {
-    return this.authService.signIn(authCredentialsDto);
+    return this.authService.signIn(authCredentialsDto, session);
   }
 
   @Get()
-  // @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @ApiBearerAuth('token')
-  // @Roles(Role.Super_Admin)
   @ApiQuery({ name: 'page', required: false })
   @ApiQuery({ name: 'perPage', required: false })
   @ApiQuery({ name: 'search', required: false })
-  getAllUsers(
+  getAllCustomers(
     @Query('page') page: number,
     @Query('perPage') perPage: number,
     @Query('search') search: string,
     @Req() req: Request,
   ): Promise<any> {
     return this.authService.getAllUsers(page, perPage, search, req);
+  }
+
+  @UseGuards(AuthGuard())
+  @Post('role')
+  async createRole(@Body() accessDto: AccessDto) {
+    return await this.authService.createRole(accessDto);
+  }
+
+  @UseGuards(AuthGuard())
+  @Post('role/privilege')
+  async createPrivilege(@Body() accessDto: AccessDto) {
+    return await this.authService.createPrivilege(accessDto);
   }
 }

@@ -1,27 +1,33 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ScheduleModule } from '@nestjs/schedule';
-import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { typeOrmConfig } from '../config/orm/global';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EventModule } from './event/event.module';
-import { BookingModule } from './booking/booking.module';
-import { WaitlistModule } from './waitlist/waitlist.module';
-import { RolesGuard } from './auth/guards/roles.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { BullModule } from '@nestjs/bull';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { RolesGuard } from './auth/guards/roles.guard';
+import { getTypeOrmConfig } from '@config/orm/global';
+import { SmsModule } from './sms/sms.module';
+import { EmailModule } from './email/email.module';
+import { OtpModule } from './otp/otp.module';
+import { CacheModule } from './cache/cache.module';
+import { WhatsAppModule } from './whats-app/whats-app.module';
+import { AccountModule } from './account/account.module';
+import { TransferModule } from './transfer/transfer.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({ ...typeOrmConfig, autoLoadEntities: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        getTypeOrmConfig(configService),
+    }),
     ScheduleModule.forRoot(),
     AuthModule,
-    EventModule,
-    BookingModule,
-    WaitlistModule,
     BullModule.forRoot({
       redis: {
         host: process.env.REDIS_DB_HOST,
@@ -29,6 +35,13 @@ import { BullModule } from '@nestjs/bull';
         password: process.env.REDIS_DB_AUTH,
       },
     }),
+    SmsModule,
+    EmailModule,
+    OtpModule,
+    CacheModule,
+    WhatsAppModule,
+    AccountModule,
+    TransferModule,
   ],
   controllers: [AppController],
   providers: [

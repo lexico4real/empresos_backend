@@ -5,12 +5,13 @@ import {
   InternalServerErrorException,
   NotFoundException,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from '../decorators/roles.decorator';
-import Logger from '../../../config/log4js/logger';
-import { AuthService } from '../auth.service';
-import { Role } from '../../../common/role.enum';
+import { ROLES_KEY } from './../decorators/roles.decorator';
+import Logger from '@config/log4js/logger';
+import { AuthService } from './../auth.service';
+import { Role } from '@common/enums/role.enum';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -46,7 +47,7 @@ export class RolesGuard implements CanActivate {
         error?.message === 'Unauthorized, token absent in header.' ||
         error?.message === 'No user found'
       ) {
-        throw new BadRequestException('You are not logged in.');
+        throw new UnauthorizedException('You are not logged in.');
       }
       if (
         error?.name === 'TokenExpiredError' ||

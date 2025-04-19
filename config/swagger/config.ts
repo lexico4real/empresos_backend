@@ -4,12 +4,12 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 export default class SwaggerConfig {
   async set(app: INestApplication) {
     const options = new DocumentBuilder()
-      .setTitle('Event Ticket Booking System')
+      .setTitle('Empresos App Backend')
       .setDescription(
-        'Node.js server that provides a RESTful API for an event ticket booking system with the following core functionalities: \n1. Initialize an event with a set number of available tickets. \n2. Allow users to book tickets concurrently. \n3. Implement a waiting list for when tickets are sold out. \n4. Provide endpoints to view available tickets and the waiting list. \n5. Handle ticket cancellations and automatic assignment to waiting list users. \n6. Save the order details to a RDBMs.',
+        'Empresos is a secure and innovative digital banking platform that provides seamless financial services, including account management, fund transfers, bill payments, and investment options. Designed for both individuals and businesses, it ensures fast, reliable, and user-friendly banking experiences.',
       )
-      .setVersion('1.0')
-      .addTag('Test API')
+      .setVersion('1.0.0')
+      .addTag('Empresos App Backend')
       .addBearerAuth(
         {
           type: 'http',
@@ -23,6 +23,6 @@ export default class SwaggerConfig {
       )
       .build();
     const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup('api', app, document);
+    SwaggerModule.setup('api-docs', app, document);
   }
 }

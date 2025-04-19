@@ -1,12 +1,12 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { TransformInterceptor } from '../config/interceptor/transform.interceptor';
-import ClusterConfig from 'config/system/cluster';
-import CorsConfig from 'config/system/cors';
-import SwaggerConfig from 'config/swagger/config';
-import * as compression from 'compression';
+import compression from 'compression';
 import 'dotenv';
+import ClusterConfig from '@config/system/cluster';
+import CorsConfig from '@config/system/cors';
+import SwaggerConfig from '@config/swagger/config';
+import { TransformInterceptor } from 'config/interceptor/transform.interceptor';
 
 async function bootstrap() {
   const cluster = new ClusterConfig();

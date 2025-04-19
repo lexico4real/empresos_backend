@@ -1,4 +1,12 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "src",
+  "entryFile": "main",
+  "compilerOptions": {
+    "webpack": true,
+    "paths": {
+      "@common/*": ["common/*"],
+      "@config/*": ["config/*"]
+    }
+  }
 }

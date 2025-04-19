@@ -3,23 +3,21 @@ version: '3.8'
 services:
   app:
     build: .
-    container_name: event-booking-app
+    container_name: empresos-app
     ports:
       - '3000:3000'
     depends_on:
-      - booking-db
+      - empresos-db
       - redis
     env_file:
       - .env
     networks:
-      - event-booking-network
-    volumes:
-      - .:/usr/src/app
+      - empresos-network
     restart: always
 
-  booking-db:
+  empresos-db:
     image: postgres:15
-    container_name: booking-db
+    container_name: empresos
     restart: always
     environment:
       POSTGRES_DB: ${DATABASE_NAME}
@@ -30,7 +28,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
-      - event-booking-network
+      - empresos-network
     command: ["postgres", "-c", "listen_addresses=*"]
 
   redis:
@@ -40,10 +38,10 @@ services:
     ports:
       - '6379:6379'
     networks:
-      - event-booking-network
+      - empresos-network
 
 networks:
-  event-booking-network:
+  empresos-network:
 
 volumes:
   db-data:
