@@ -10,9 +10,9 @@ import {
   MinLength,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { SecurityQuestions } from './../../../common/enums/security-questions.enum';
-import { AccountStatus } from './../../../common/enums/account-status.enum';
-import { Role } from './../../../common/enums/role.enum';
+import { SecurityQuestions } from '@common/enums/security-questions.enum';
+import { AccountStatus } from '@common/enums/account-status.enum';
+import { Role } from '@common/enums/role.enum';
 
 export class CreateUserDto {
   @ApiProperty()

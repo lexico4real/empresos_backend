@@ -8,7 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { RolesGuard } from './auth/guards/roles.guard';
-import { getTypeOrmConfig } from './../config/orm/global';
+import { getTypeOrmConfig } from '@config/orm/global';
 import { SmsModule } from './sms/sms.module';
 import { EmailModule } from './email/email.module';
 import { OtpModule } from './otp/otp.module';

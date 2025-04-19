@@ -3,7 +3,7 @@ import { EntityRepository, Repository, FindManyOptions, ILike } from 'typeorm';
 import { Request } from 'express';
 import { InternalServerErrorException, Req } from '@nestjs/common';
 import { UserPrivilege } from './../entities/user-privilege.entity';
-import { generatePagination } from './../../../common/util/pagination';
+import { generatePagination } from '@common/util/pagination';
 
 @EntityRepository(UserPrivilege)
 export class UserPrivilegeRepository extends Repository<UserPrivilege> {

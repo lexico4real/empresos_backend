@@ -17,14 +17,14 @@ import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { UsersRepository } from './repositories/users.repository';
 import { JwtPayload } from './jwt-payload.interface';
 import { User } from './entities/user.entity';
-import { generatePagination } from './../../common/util/pagination';
+import { generatePagination } from '@common/util/pagination';
 import { InitiateRegistationDto } from './dto/initiate-registration.dto';
 import { SmsService } from './../sms/sms.service';
 import { OtpService } from './../otp/otp.service';
 import { EmailService } from './../email/email.service';
 import { UserRoleRepository } from './repositories/user-role.repository';
 import { UserPrivilegeRepository } from './repositories/user-privilege.repository';
-import { Role } from './../../common/enums/role.enum';
+import { Role } from '@common/enums/role.enum';
 import { AccountService } from 'src/account/account.service';
 
 @Injectable()

@@ -9,7 +9,7 @@ import { User } from './../entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from './../dto/create-user.dto';
 import { isEmail } from 'class-validator';
-import { Role } from './../../../common/enums/role.enum';
+import { Role } from '@common/enums/role.enum';
 
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {

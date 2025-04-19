@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { BaseEntity } from './../../base.entity';
-import { AccountStatus } from './../../../common/enums/account-status.enum';
+import { AccountStatus } from '@common/enums/account-status.enum';
 import { UserRole } from './user-role.entity';
 import { Account } from './../../account/entities/account.entity';
 
