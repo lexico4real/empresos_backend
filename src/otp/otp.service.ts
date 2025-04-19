@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import { User } from './../auth/entities/user.entity';
 import { CacheService } from './../cache/cache.service';
 import { OtpDto } from './dto/otp.dto';
-import { generateRandomValue } from '@common/util/generateNumber';
+import { generateRandomValue } from 'src/common/util/generateNumber';
 
 @Injectable()
 export class OtpService {

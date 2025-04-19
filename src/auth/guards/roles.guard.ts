@@ -9,9 +9,9 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from './../decorators/roles.decorator';
-import Logger from '@config/log4js/logger';
 import { AuthService } from './../auth.service';
-import { Role } from '@common/enums/role.enum';
+import { Role } from 'src/common/enums/role.enum';
+import Logger from 'src/config/log4js/logger';
 
 @Injectable()
 export class RolesGuard implements CanActivate {

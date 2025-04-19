@@ -14,10 +14,10 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Role } from '@common/enums/role.enum';
 import { Request, Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AccessDto } from './dto/access.dto';
+import { Role } from 'src/common/enums/role.enum';
 
 @ApiTags('users')
 @Controller('users')

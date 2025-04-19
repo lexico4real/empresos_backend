@@ -1,4 +1,4 @@
-import Logger from 'config/log4js/logger';
+import Logger from '../log4js/logger';
 
 const logger = new Logger();
 
