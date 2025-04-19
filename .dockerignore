@@ -1,7 +1,10 @@
-/dist
-/node_modules
-.env
-.history
-/logs
-*.log
-.DS_Store
+# Ignore everything except the necessary files
+*
+!Dockerfile
+!package.json
+!package-lock.json
+!node_modules
+!src
+!tsconfig.json
+!tsconfig.build.json
+!.env

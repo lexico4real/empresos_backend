@@ -8,7 +8,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { RolesGuard } from './auth/guards/roles.guard';
-import { getTypeOrmConfig } from 'config/orm/global';
+import { getTypeOrmConfig } from './../config/orm/global';
+import { SmsModule } from './sms/sms.module';
+import { EmailModule } from './email/email.module';
+import { OtpModule } from './otp/otp.module';
+import { CacheModule } from './cache/cache.module';
+import { WhatsAppModule } from './whats-app/whats-app.module';
+import { AccountModule } from './account/account.module';
+import { TransferModule } from './transfer/transfer.module';
 
 @Module({
   imports: [
@@ -28,6 +35,13 @@ import { getTypeOrmConfig } from 'config/orm/global';
         password: process.env.REDIS_DB_AUTH,
       },
     }),
+    SmsModule,
+    EmailModule,
+    OtpModule,
+    CacheModule,
+    WhatsAppModule,
+    AccountModule,
+    TransferModule,
   ],
   controllers: [AppController],
   providers: [

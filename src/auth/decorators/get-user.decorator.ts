@@ -3,7 +3,7 @@ import {
   ExecutionContext,
   NotFoundException,
 } from '@nestjs/common';
-import { User } from '../../auth/user.entity';
+import { User } from './../entities/user.entity';
 
 export const GetUser = createParamDecorator(
   (_data, ctx: ExecutionContext): User => {

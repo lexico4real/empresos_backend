@@ -19,7 +19,7 @@ export const getTypeOrmConfig = (
     configService.get<boolean>('db.synchronize') ||
     process.env.TYPEORM_SYNC === 'true',
   migrationsRun: true,
-  logging: true,
+  logging: false,
   logger: 'file',
   migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
   autoLoadEntities: true,
