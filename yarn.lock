@@ -3228,7 +3228,7 @@
     "jest-matcher-utils" "^27.5.1"
     "jest-message-util" "^27.5.1"
 
-"express@>=4.0.0 || >=5.0.0-beta":
+"express@^5.1.0", "express@>=4.0.0 || >=5.0.0-beta":
   "integrity" "sha512-DT9ck5YIRU+8GYzzU5kT3eHGA5iL+1Zd0EutOmTE9Dtk+Tvuzd23VBU+ec7HPNSTxXYO55gPV/hq4pSBJDjFpA=="
   "resolved" "https://registry.npmjs.org/express/-/express-5.1.0.tgz"
   "version" "5.1.0"
