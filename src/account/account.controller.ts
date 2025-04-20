@@ -13,7 +13,9 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 import { GetUser } from './../auth/get-user.decorator';
 import { User } from './../auth/entities/user.entity';
 import { Account } from './entities/account.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('account')
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
