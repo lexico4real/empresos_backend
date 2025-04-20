@@ -9,10 +9,13 @@ import SwaggerConfig from './config/swagger/config';
 import { TransformInterceptor } from './config/interceptor/transform.interceptor';
 
 async function bootstrap() {
+  console.log(1, process.env);
   const cluster = new ClusterConfig();
   const cors = new CorsConfig();
   const doc = new SwaggerConfig();
   const app = await NestFactory.create(AppModule);
+
+  console.log(2, process.env);
 
   app.useGlobalPipes(new ValidationPipe());
   await cors.set(app);
