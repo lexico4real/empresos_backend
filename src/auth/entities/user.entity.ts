@@ -9,7 +9,8 @@ import {
 import { BaseEntity } from './../../base.entity';
 import { UserRole } from './user-role.entity';
 import { Account } from './../../account/entities/account.entity';
-import { AccountStatus } from 'src/common/enums/account-status.enum';
+import { AccountStatus } from '../../common/enums/account-status.enum';
+import { VirtualCard } from '../../card/entities/virtual-card.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -44,4 +45,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Account, (account) => account.user)
   accounts: Account[];
+
+  @OneToMany(() => VirtualCard, (vCard) => vCard.user)
+  virtualCards: VirtualCard[];
 }

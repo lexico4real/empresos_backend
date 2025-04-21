@@ -51,7 +51,7 @@ export class TransactionRepository extends Repository<Transaction> {
         senderAccount: senderAccount,
         receiverAccount: receiverAccount,
         amount,
-        narration,
+        narration: narration || `Cash transfer to ${receiverAccount}`,
         user: sender.user,
       });
 

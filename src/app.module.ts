@@ -16,6 +16,7 @@ import { WhatsAppModule } from './whats-app/whats-app.module';
 import { AccountModule } from './account/account.module';
 import { TransferModule } from './transfer/transfer.module';
 import { getTypeOrmConfig } from './config/orm/global';
+import { CardModule } from './card/card.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { getTypeOrmConfig } from './config/orm/global';
     WhatsAppModule,
     AccountModule,
     TransferModule,
+    CardModule,
   ],
   controllers: [AppController],
   providers: [

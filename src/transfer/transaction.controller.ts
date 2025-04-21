@@ -13,11 +13,12 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { TransferService } from './transaction.service';
 import { CreateTransferDto } from './dto/create-transfer.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '../auth/entities/user.entity';
 
-@UseGuards(AuthGuard())
 @ApiTags('transaction')
+@UseGuards(AuthGuard())
+@ApiBearerAuth('token')
 @Controller('transaction')
 export class TransferController {
   constructor(private readonly transferService: TransferService) {}

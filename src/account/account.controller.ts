@@ -1,21 +1,14 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { AccountService } from './account.service';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
 import { GetUser } from './../auth/get-user.decorator';
 import { User } from './../auth/entities/user.entity';
 import { Account } from './entities/account.entity';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('account')
+@UseGuards(AuthGuard())
+@ApiBearerAuth('token')
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
