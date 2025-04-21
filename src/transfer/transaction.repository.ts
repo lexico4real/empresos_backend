@@ -4,6 +4,9 @@ import { Transaction } from './entities/transaction.entity';
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { Account } from './../account/entities/account.entity';
 import { User } from 'src/auth/entities/user.entity';
+import { Request } from 'express';
+import { ILike, FindManyOptions } from 'typeorm';
+import { generatePagination } from '../common/util/pagination';
 
 @EntityRepository(Transaction)
 export class TransactionRepository extends Repository<Transaction> {
@@ -68,10 +71,29 @@ export class TransactionRepository extends Repository<Transaction> {
     }
   }
 
-  async getTransactionHistory(user: User) {
-    return await this.find({
-      where: { user },
+  async getTransactionHistory(
+    user: User,
+    page = 1,
+    perPage = 10,
+    search?: string,
+    req?: Request,
+  ) {
+    const skip = (page - 1) * perPage;
+
+    const where: FindManyOptions['where'] = {
+      user,
+      ...(search && {
+        narration: ILike(`%${search}%`),
+      }),
+    };
+
+    const [transactions, total] = await this.findAndCount({
+      where,
       order: { createdAt: 'DESC' },
+      skip,
+      take: perPage,
     });
+
+    return generatePagination(page, perPage, total, req, transactions);
   }
 }

@@ -28,7 +28,18 @@ export class TransferController {
   }
 
   @Get('history')
-  getTransactionHistory(@Req() req: Request) {
-    return this.transferService.getTransactionHistory(req?.user as User);
+  getTransactionHistory(
+    @Req() req: Request,
+    page?: number,
+    perPage?: number,
+    search?: string,
+  ) {
+    return this.transferService.getTransactionHistory(
+      req?.user as User,
+      page,
+      perPage,
+      search,
+      req,
+    );
   }
 }

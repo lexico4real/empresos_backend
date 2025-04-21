@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Request } from 'express';
+import { Connection } from 'typeorm';
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { TransactionRepository } from './transaction.repository';
 import { EmailService } from '../email/email.service';
-import { Connection } from 'typeorm';
 import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
@@ -41,7 +42,19 @@ export class TransferService {
     };
   }
 
-  async getTransactionHistory(user: User) {
-    return await this.txnRepo.getTransactionHistory(user);
+  async getTransactionHistory(
+    user: User,
+    page?: number,
+    perPage?: number,
+    search?: string,
+    req?: Request,
+  ) {
+    return await this.txnRepo.getTransactionHistory(
+      user,
+      page,
+      perPage,
+      search,
+      req,
+    );
   }
 }
