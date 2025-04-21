@@ -3,6 +3,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Transaction } from './entities/transaction.entity';
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { Account } from './../account/entities/account.entity';
+import { User } from 'src/auth/entities/user.entity';
 
 @EntityRepository(Transaction)
 export class TransactionRepository extends Repository<Transaction> {
@@ -61,5 +62,12 @@ export class TransactionRepository extends Repository<Transaction> {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  async getTransactionHistory(user: User) {
+    return await this.find({
+      where: { user },
+      order: { createdAt: 'DESC' },
+    });
   }
 }

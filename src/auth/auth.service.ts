@@ -166,8 +166,6 @@ export class AuthService {
       ...user,
     };
 
-    console.log(session.currentUser);
-
     return { accessToken, ...user };
   }
 

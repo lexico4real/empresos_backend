@@ -1,0 +1,47 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateTransferDto } from './dto/create-transfer.dto';
+import { TransactionRepository } from './transaction.repository';
+import { EmailService } from '../email/email.service';
+import { Connection } from 'typeorm';
+import { User } from 'src/auth/entities/user.entity';
+
+@Injectable()
+export class TransferService {
+  constructor(
+    @InjectRepository(TransactionRepository)
+    private readonly txnRepo: TransactionRepository,
+    private readonly emailService: EmailService,
+    private readonly connection: Connection,
+  ) {}
+
+  async transferMoney(dto: CreateTransferDto) {
+    const { sender, receiver, txn } = await this.txnRepo.transfer(
+      this.connection,
+      dto,
+    );
+
+    await Promise.all([
+      this.emailService.sendMail(
+        sender.user.email,
+        'Debit Alert',
+        `You have transferred $${txn.amount} to ${receiver.user.firstName} ${receiver.user.lastName}. Narration: ${txn.narration}`,
+      ),
+      this.emailService.sendMail(
+        sender.user.email,
+        'Credit Alert',
+        `You have been credited $${txn.amount} from ${sender.user.firstName} ${sender.user.lastName}. Narration: ${txn.narration}`,
+      ),
+    ]);
+
+    return {
+      success: true,
+      message: 'Transfer completed',
+      txn,
+    };
+  }
+
+  async getTransactionHistory(user: User) {
+    return await this.txnRepo.getTransactionHistory(user);
+  }
+}
