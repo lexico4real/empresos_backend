@@ -15,6 +15,10 @@ export class TransactionRepository extends Repository<Transaction> {
     try {
       const { senderAccount, receiverAccount, amount, narration } = dto;
 
+      if (!senderAccount) {
+        throw new NotFoundException('Sender Not Found');
+      }
+
       const sender = await queryRunner.manager.findOne(Account, {
         where: { accountNumber: senderAccount },
         relations: ['user'],

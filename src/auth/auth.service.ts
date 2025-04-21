@@ -119,12 +119,12 @@ export class AuthService {
   async signIn(
     authCredentialsDto: AuthCredentialsDto,
     session: any,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<{ accessToken: any }> {
     const { email, password, secret, otp } = authCredentialsDto;
 
     const normalizedEmail = email.toLowerCase();
 
-    const user = await this.usersRepository.findOne({ email: normalizedEmail });
+    const user = await this.usersRepository.getUserByEmail(normalizedEmail);
 
     if (!user) {
       throw new UnauthorizedException(
@@ -207,5 +207,12 @@ export class AuthService {
 
   verifyJwt(token: string) {
     return this.jwtService.verify(token);
+  }
+
+  async getUserByEmail(email: string) {
+    const user = await this.usersRepository.getUserByEmail(email);
+    const accounts = await this.accountService.getUserAccounts(user.id);
+    user.accounts = accounts;
+    return user;
   }
 }

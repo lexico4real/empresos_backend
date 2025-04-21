@@ -14,6 +14,7 @@ import { Request } from 'express';
 import { TransferService } from './transaction.service';
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { User } from '../auth/entities/user.entity';
 
 @UseGuards(AuthGuard())
 @ApiTags('transaction')
@@ -28,6 +29,6 @@ export class TransferController {
 
   @Get('history')
   getTransactionHistory(@Req() req: Request) {
-    return this.transferService.getTransactionHistory(req?.['currentUser']);
+    return this.transferService.getTransactionHistory(req?.user as User);
   }
 }

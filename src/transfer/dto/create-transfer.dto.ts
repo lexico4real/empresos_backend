@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsNumber,
@@ -7,19 +8,23 @@ import {
 } from 'class-validator';
 
 export class CreateTransferDto {
+  @ApiPropertyOptional()
   @IsString()
   @IsNotEmpty()
   senderAccount: string;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   receiverAccount: string;
 
+  @ApiProperty()
   @IsNumber()
   @Min(1)
   amount: number;
 
-  @IsString()
+  @ApiPropertyOptional()
   @IsOptional()
+  @IsString()
   narration?: string;
 }

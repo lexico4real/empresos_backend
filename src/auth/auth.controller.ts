@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Query,
   Req,
@@ -75,6 +76,12 @@ export class AuthController {
   @Post('role')
   async createRole(@Body() accessDto: AccessDto) {
     return await this.authService.createRole(accessDto);
+  }
+
+  @UseGuards(AuthGuard())
+  @Get(':email')
+  async getUserByEmail(@Param('email') email: string) {
+    return await this.authService.getUserByEmail(email);
   }
 
   @UseGuards(AuthGuard())
