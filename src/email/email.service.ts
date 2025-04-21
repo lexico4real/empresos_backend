@@ -1,3 +1,4 @@
+import { SendEmailDto } from './email.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 // import { Transporter } from 'nodemailer';
@@ -24,7 +25,8 @@ export class EmailService {
     });
   }
 
-  async sendMail(to: string, subject: string, text: string, html?: string) {
+  async sendMail(sendEmailDto: SendEmailDto) {
+    const { to, subject, text, html } = sendEmailDto;
     try {
       const mailOptions = {
         from: `"Empresos" <${process.env.EMAIL_USER}>`,

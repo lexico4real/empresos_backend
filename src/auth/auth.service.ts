@@ -64,11 +64,11 @@ export class AuthService {
     //   message: `Your Registration token is ${otp}`,
     // });
 
-    await this.emailService.sendMail(
-      email,
-      'Login OTP',
-      `Your Registration token is ${otp}}`,
-    );
+    await this.emailService.sendMail({
+      to: email,
+      subject: 'Login OTP',
+      text: `Your Registration token is ${otp}}`,
+    });
     return { secret };
   }
 
@@ -77,6 +77,11 @@ export class AuthService {
     if (createUserDto.role === Role.CUSTOMER) {
       await this.accountService.createAccount(user);
     }
+    await this.emailService.sendMail({
+      to: user.email,
+      subject: 'New Account',
+      text: `Welcome ${user.firstName}! This is a confirmation of the New Account You opened with us.`,
+    });
   }
 
   async getLoginOTP(authCredentialsDto: AuthCredentialsDto, userData: any) {
@@ -103,11 +108,11 @@ export class AuthService {
     //   message: `Your Login token is ${token?.otp}`,
     // });
 
-    await this.emailService.sendMail(
-      _email,
-      'Login OTP',
-      `Your Login OTP is ${token?.otp}`,
-    );
+    await this.emailService.sendMail({
+      to: _email,
+      subject: 'Login OTP',
+      text: `Your Login OTP is ${token?.otp}`,
+    });
 
     return {
       secret: token?.secret || null,

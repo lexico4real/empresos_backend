@@ -22,16 +22,16 @@ export class TransferService {
     );
 
     await Promise.all([
-      this.emailService.sendMail(
-        sender.user.email,
-        'Debit Alert',
-        `You have transferred $${txn.amount} to ${receiver.user.firstName} ${receiver.user.lastName}. Narration: ${txn.narration}`,
-      ),
-      this.emailService.sendMail(
-        sender.user.email,
-        'Credit Alert',
-        `You have been credited $${txn.amount} from ${sender.user.firstName} ${sender.user.lastName}. Narration: ${txn.narration}`,
-      ),
+      this.emailService.sendMail({
+        to: sender.user.email,
+        subject: 'Debit Alert',
+        text: `You have transferred $${txn.amount} to ${receiver.user.firstName} ${receiver.user.lastName}. Narration: ${txn.narration}`,
+      }),
+      this.emailService.sendMail({
+        to: sender.user.email,
+        subject: 'Credit Alert',
+        text: `You have been credited $${txn.amount} from ${sender.user.firstName} ${sender.user.lastName}. Narration: ${txn.narration}`,
+      }),
     ]);
 
     return {
