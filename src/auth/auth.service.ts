@@ -132,6 +132,8 @@ export class AuthService {
       );
     }
 
+    const accounts = await this.accountService.getUserAccounts(user.id);
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
@@ -158,11 +160,15 @@ export class AuthService {
 
     delete user.password;
 
+    user.accounts = accounts;
+
     session.currentUser = {
       ...user,
     };
 
-    return { accessToken };
+    console.log(session.currentUser);
+
+    return { accessToken, ...user };
   }
 
   async getAllUsers(
