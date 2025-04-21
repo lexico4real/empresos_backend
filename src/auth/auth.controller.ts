@@ -53,6 +53,7 @@ export class AuthController {
     @Body() authCredentialsDto: AuthCredentialsDto,
     @Session() session?: any,
   ): Promise<{ accessToken: string }> {
+    console.log(session);
     return this.authService.signIn(authCredentialsDto, session);
   }
 

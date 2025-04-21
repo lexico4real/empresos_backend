@@ -16,6 +16,7 @@ import { OtpModule } from './../otp/otp.module';
 import { UserPrivilegeRepository } from './repositories/user-privilege.repository';
 import { UserRoleRepository } from './repositories/user-role.repository';
 import { AccountModule } from './../account/account.module';
+import { CookieSessionModule } from 'nestjs-cookie-session';
 
 @Module({
   imports: [
@@ -39,6 +40,9 @@ import { AccountModule } from './../account/account.module';
       UserPrivilegeRepository,
       UserRoleRepository,
     ]),
+    CookieSessionModule.forRoot({
+      session: { secret: 'top secret', maxAge: 60 * 60 * 1000 * 8 },
+    }),
     ThrottlerModule.forRoot([
       {
         ttl: 30,
