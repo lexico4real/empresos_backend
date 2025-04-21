@@ -21,9 +21,9 @@ import { AuthGuard } from '@nestjs/passport';
 export class CardController {
   constructor(private readonly cardService: CardService) {}
 
-  @Post()
-  createCard(@Req() req, @Body() dto: CreateVirtualCardDto) {
-    return this.cardService.createCard(req.user, dto);
+  @Post('issue')
+  createCard(@Req() req) {
+    return this.cardService.createCard(req?.user);
   }
 
   @Get()

@@ -7,15 +7,19 @@ import { User } from 'src/auth/entities/user.entity';
 export class CardService {
   constructor(private readonly virtualCardRepository: VirtualCardRepository) {}
 
-  async createCard(user: User, dto: CreateVirtualCardDto) {
-    return await this.virtualCardRepository.createCard(
+  async createCard(user: User) {
+    const cardHolderName = `${user.firstName} ${user.lastName}`;
+    const result = await this.virtualCardRepository.createCard(
       user,
-      dto,
+      { cardHolderName },
       this.generateCardNumber(),
       this.generateExpiry().month,
       this.generateExpiry().year,
       this.generateCVV(),
     );
+    delete result.user.password;
+
+    return result;
   }
 
   async getCards(user: User) {
