@@ -1,17 +1,16 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { Transaction } from './entities/transaction.entity';
-import { CreateTransferDto } from './dto/create-transfer.dto';
-import { Account } from './../account/entities/account.entity';
+import { Account } from '../account/entities/account.entity';
 import { User } from 'src/auth/entities/user.entity';
 import { Request } from 'express';
 import { ILike, FindManyOptions } from 'typeorm';
 import { generatePagination } from '../common/util/pagination';
 import { CreateIntlTransferDto } from './dto/create-intl-transfer.dto';
+import { IntlTransaction } from './entities/intlTransaction.entity';
 
-@EntityRepository(Transaction)
-export class TransactionRepository extends Repository<Transaction> {
-  async transfer(connection, dto: CreateTransferDto) {
+@EntityRepository(IntlTransaction)
+export class IntlTransactionRepository extends Repository<IntlTransaction> {
+  async initiateIntlTransfer(connection, dto: CreateIntlTransferDto) {
     const queryRunner = connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -28,31 +27,26 @@ export class TransactionRepository extends Repository<Transaction> {
         relations: ['user'],
       });
 
-      const receiver = await queryRunner.manager.findOne(Account, {
-        where: { accountNumber: receiverAccount },
-        relations: ['user'],
-      });
+      // const receiver = await queryRunner.manager.findOne(Account, {
+      //   where: { accountNumber: receiverAccount },
+      //   relations: ['user'],
+      // });
 
-      if (!sender || !receiver)
-        throw new NotFoundException('Invalid account(s)');
-      if (!sender.isActive || !receiver.isActive)
-        throw new BadRequestException('Inactive account');
-      if (sender.id === receiver.id)
-        throw new BadRequestException('Cannot transfer to same account');
+      if (!sender) throw new NotFoundException('Invalid account(s)');
+      if (!sender.isActive) throw new BadRequestException('Inactive account');
       if (Number(sender.balance) < amount)
         throw new BadRequestException('Insufficient funds');
 
       sender.balance -= amount;
-      receiver.balance += amount;
 
       await queryRunner.manager.save(sender);
-      await queryRunner.manager.save(receiver);
 
       const txn = this.create({
         senderAccount: senderAccount,
         receiverAccount: receiverAccount,
         amount,
         narration: narration || `Cash transfer to ${receiverAccount}`,
+        ...dto,
         user: sender.user,
       });
 
@@ -62,7 +56,6 @@ export class TransactionRepository extends Repository<Transaction> {
       return {
         txn,
         sender,
-        receiver,
       };
     } catch (err) {
       await queryRunner.rollbackTransaction();
@@ -72,7 +65,7 @@ export class TransactionRepository extends Repository<Transaction> {
     }
   }
 
-  async getTransactionHistory(
+  async getIntlTransactionHistory(
     user: User,
     page = 1,
     perPage = 10,

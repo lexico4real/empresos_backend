@@ -571,9 +571,34 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3":
+  "integrity" "sha512-QZHtlVgbAdy2zAqNA9Gu1UpIuI8Xvsd1v8ic6B2pZmeFnFcMWiPLfWXh7TVw4eGEZ/C9TH281KwhVoeQUKbyjw=="
+  "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-darwin-arm64/-/msgpackr-extract-darwin-arm64-3.0.3.tgz"
+  "version" "3.0.3"
+
 "@msgpackr-extract/msgpackr-extract-darwin-x64@3.0.3":
   "integrity" "sha512-mdzd3AVzYKuUmiWOQ8GNhl64/IoFGol569zNRdkLReh6LRLHOXxU4U8eq0JwaD8iFHdVGqSy4IjFL4reoWCDFw=="
   "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-darwin-x64/-/msgpackr-extract-darwin-x64-3.0.3.tgz"
+  "version" "3.0.3"
+
+"@msgpackr-extract/msgpackr-extract-linux-arm@3.0.3":
+  "integrity" "sha512-fg0uy/dG/nZEXfYilKoRe7yALaNmHoYeIoJuJ7KJ+YyU2bvY8vPv27f7UKhGRpY6euFYqEVhxCFZgAUNQBM3nw=="
+  "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-linux-arm/-/msgpackr-extract-linux-arm-3.0.3.tgz"
+  "version" "3.0.3"
+
+"@msgpackr-extract/msgpackr-extract-linux-arm64@3.0.3":
+  "integrity" "sha512-YxQL+ax0XqBJDZiKimS2XQaf+2wDGVa1enVRGzEvLLVFeqa5kx2bWbtcSXgsxjQB7nRqqIGFIcLteF/sHeVtQg=="
+  "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-linux-arm64/-/msgpackr-extract-linux-arm64-3.0.3.tgz"
+  "version" "3.0.3"
+
+"@msgpackr-extract/msgpackr-extract-linux-x64@3.0.3":
+  "integrity" "sha512-cvwNfbP07pKUfq1uH+S6KJ7dT9K8WOE4ZiAcsrSes+UY55E/0jLYc+vq+DO7jlmqRb5zAggExKm0H7O/CBaesg=="
+  "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-linux-x64/-/msgpackr-extract-linux-x64-3.0.3.tgz"
+  "version" "3.0.3"
+
+"@msgpackr-extract/msgpackr-extract-win32-x64@3.0.3":
+  "integrity" "sha512-x0fWaQtYp4E6sktbsdAqnehxDgEc/VwM7uLsRCYWaiGu0ykYdZPiS8zCWdnjHwyiumousxfBm4SO31eXqwEZhQ=="
+  "resolved" "https://registry.npmjs.org/@msgpackr-extract/msgpackr-extract-win32-x64/-/msgpackr-extract-win32-x64-3.0.3.tgz"
   "version" "3.0.3"
 
 "@nestjs/axios@^0.1.0":
@@ -6743,6 +6768,7 @@
     "compression" "^1.8.0"
     "config" "^3.3.8"
     "cookie-parser" "^1.4.7"
+    "cookie-session" "^2.1.0"
     "express" "^5.1.0"
     "ioredis" "^5.4.1"
     "js-yaml" "^4.1.0"

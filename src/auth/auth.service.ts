@@ -94,6 +94,8 @@ export class AuthService {
       user = userData;
     }
 
+    delete user.password;
+
     const { phoneNumber, email: _email } = user;
 
     const token = await this.otpService.generateOtp(
@@ -218,6 +220,7 @@ export class AuthService {
     const user = await this.usersRepository.getUserByEmail(email);
     const accounts = await this.accountService.getUserAccounts(user.id);
     user.accounts = accounts;
+    delete user.password;
     return user;
   }
 }

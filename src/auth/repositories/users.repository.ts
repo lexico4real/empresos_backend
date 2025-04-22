@@ -48,7 +48,6 @@ export class UsersRepository extends Repository<User> {
     if (!user) {
       throw new NotFoundException('Invalid email/password');
     }
-    delete user.password;
     return user;
   }
 }

@@ -15,6 +15,7 @@ import { TransferService } from './transaction.service';
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '../auth/entities/user.entity';
+import { CreateIntlTransferDto } from './dto/create-intl-transfer.dto';
 
 @ApiTags('transaction')
 @UseGuards(AuthGuard())
@@ -36,6 +37,27 @@ export class TransferController {
     search?: string,
   ) {
     return this.transferService.getTransactionHistory(
+      req?.user as User,
+      page,
+      perPage,
+      search,
+      req,
+    );
+  }
+
+  @Post('transfer/international')
+  initiateIntltransfer(@Body() dto: CreateIntlTransferDto) {
+    return this.transferService.initiateIntlTransfer(dto);
+  }
+
+  @Get('history/intl')
+  getIntlTransactionHistory(
+    @Req() req: Request,
+    page?: number,
+    perPage?: number,
+    search?: string,
+  ) {
+    return this.transferService.getIntlTransactionHistory(
       req?.user as User,
       page,
       perPage,
