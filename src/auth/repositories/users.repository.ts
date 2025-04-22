@@ -46,7 +46,9 @@ export class UsersRepository extends Repository<User> {
     const user = await this.findOne({ email });
 
     if (!user) {
-      throw new NotFoundException('Invalid email/password');
+      throw new NotFoundException(
+        'Wrong email/password. Please check your login credentials',
+      );
     }
     return user;
   }

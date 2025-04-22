@@ -85,13 +85,21 @@ export class AuthService {
   }
 
   async getLoginOTP(authCredentialsDto: AuthCredentialsDto, userData: any) {
-    const { email } = authCredentialsDto;
+    const { email, password } = authCredentialsDto;
     const normalizedEmail = email.toLowerCase();
     let user: User;
     if (!userData) {
       user = await this.usersRepository.getUserByEmail(normalizedEmail);
     } else {
       user = userData;
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException(
+        'Wrong email/password. Please check your login credentials',
+      );
     }
 
     delete user.password;
