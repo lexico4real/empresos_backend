@@ -186,43 +186,43 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'Banco Santander S.A.',
-        swiftCode: 'BSCHESMMXXX',
+        swiftCode: 'BSCHESMM',
       },
       {
         bankName: 'Banco Bilbao Vizcaya Argentaria (BBVA)',
-        swiftCode: 'BBVAESMMXXX',
+        swiftCode: 'BBVAESMM',
       },
       {
         bankName: 'CaixaBank S.A.',
-        swiftCode: 'CAIXESBBXXX',
+        swiftCode: 'CAIXESBB',
       },
       {
         bankName: 'Bankinter S.A.',
-        swiftCode: 'BKBKESMMXXX',
+        swiftCode: 'BKBKESMM',
       },
       {
         bankName: 'Banco Sabadell',
-        swiftCode: 'BSABESBBXXX',
+        swiftCode: 'BSABESBB',
       },
       {
         bankName: 'Unicaja Banco',
-        swiftCode: 'UCJAES2MXXX',
+        swiftCode: 'UCJAES2M',
       },
       {
         bankName: 'Kutxabank S.A.',
-        swiftCode: 'BASKES2BXXX',
+        swiftCode: 'BASKES2B',
       },
       {
         bankName: 'Abanca Corporación Bancaria S.A.',
-        swiftCode: 'CAGLESMMXXX',
+        swiftCode: 'CAGLESMM',
       },
       {
         bankName: 'Ibercaja Banco S.A.',
-        swiftCode: 'CAZRES2ZXXX',
+        swiftCode: 'CAZRES2Z',
       },
       {
         bankName: 'Bankoa Crédit Agricole',
-        swiftCode: 'BKOAES22XXX',
+        swiftCode: 'BKOAES22',
       },
     ],
   },
@@ -235,43 +235,43 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'BNP Paribas',
-        swiftCode: 'BNPAFRPPXXX',
+        swiftCode: 'BNPAFRPP',
       },
       {
         bankName: 'Société Générale',
-        swiftCode: 'SOGEFRPPXXX',
+        swiftCode: 'SOGEFRPP',
       },
       {
         bankName: 'Crédit Agricole',
-        swiftCode: 'AGRIFRPPXXX',
+        swiftCode: 'AGRIFRPP',
       },
       {
         bankName: 'Crédit Mutuel',
-        swiftCode: 'CMCIFR2AXXX',
+        swiftCode: 'CMCIFR2A',
       },
       {
         bankName: 'La Banque Postale',
-        swiftCode: 'PSSTFRPPXXX',
+        swiftCode: 'PSSTFRPP',
       },
       {
         bankName: "BPCE (Banque Populaire & Caisse d'Épargne)",
-        swiftCode: 'CEPAFRPPXXX',
+        swiftCode: 'CEPAFRPP',
       },
       {
         bankName: 'Banque Palatine',
-        swiftCode: 'SGBLFRPPXXX',
+        swiftCode: 'SGBLFRPP',
       },
       {
         bankName: 'HSBC France',
-        swiftCode: 'CCFRFRPPXXX',
+        swiftCode: 'CCFRFRPP',
       },
       {
         bankName: 'LCL (Le Crédit Lyonnais)',
-        swiftCode: 'CRLYFRPPXXX',
+        swiftCode: 'CRLYFRPP',
       },
       {
         bankName: 'AXA Banque',
-        swiftCode: 'AXABFRPPXXX',
+        swiftCode: 'AXABFRPP',
       },
     ],
   },
@@ -284,43 +284,43 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'UniCredit S.p.A.',
-        swiftCode: 'UNCRITMMXXX',
+        swiftCode: 'UNCRITMM',
       },
       {
         bankName: 'Intesa Sanpaolo S.p.A.',
-        swiftCode: 'BCITITMMXXX',
+        swiftCode: 'BCITITMM',
       },
       {
         bankName: 'Banca Monte dei Paschi di Siena',
-        swiftCode: 'PASCITMMXXX',
+        swiftCode: 'PASCITMM',
       },
       {
         bankName: 'Banco BPM S.p.A.',
-        swiftCode: 'BAPPIT21XXX',
+        swiftCode: 'BAPPIT21',
       },
       {
         bankName: 'BPER Banca S.p.A.',
-        swiftCode: 'EMILITR1XXX',
+        swiftCode: 'EMILITR1',
       },
       {
         bankName: 'Credito Emiliano (Credem)',
-        swiftCode: 'BACRIT22XXX',
+        swiftCode: 'BACRIT22',
       },
       {
         bankName: 'Banca Carige',
-        swiftCode: 'CRGEITGGXXX',
+        swiftCode: 'CRGEITGG',
       },
       {
         bankName: 'Banca Popolare di Sondrio',
-        swiftCode: 'POSOIT22XXX',
+        swiftCode: 'POSOIT22',
       },
       {
         bankName: 'Banca Popolare di Milano (BPM)',
-        swiftCode: 'BPMOIT22XXX',
+        swiftCode: 'BPMOIT22',
       },
       {
         bankName: 'Cassa Centrale Banca',
-        swiftCode: 'CCRTIT2TXXX',
+        swiftCode: 'CCRTIT2T',
       },
       {
         bankName: 'FinecoBank S.p.A.',
@@ -328,7 +328,7 @@ export const INTL_BANKS = [
       },
       {
         bankName: 'UBI Banca (Now part of Intesa Sanpaolo)',
-        swiftCode: 'BLOPIT22XXX',
+        swiftCode: 'BLOPIT22',
       },
     ],
   },
@@ -341,43 +341,43 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'Deutsche Bank AG',
-        swiftCode: 'DEUTDEFFXXX',
+        swiftCode: 'DEUTDEFF',
       },
       {
         bankName: 'Commerzbank AG',
-        swiftCode: 'COBADEFFXXX',
+        swiftCode: 'COBADEFF',
       },
       {
         bankName: 'DZ Bank AG',
-        swiftCode: 'GENODEFFXXX',
+        swiftCode: 'GENODEFF',
       },
       {
         bankName: 'Unicredit Bank AG (HypoVereinsbank)',
-        swiftCode: 'HYVEDEMMXXX',
+        swiftCode: 'HYVEDEMM',
       },
       {
         bankName: 'KfW Bankengruppe',
-        swiftCode: 'KFWIDEFFXXX',
+        swiftCode: 'KFWIDEFF',
       },
       {
         bankName: 'Landesbank Baden-Württemberg (LBBW)',
-        swiftCode: 'SOLADESTXXX',
+        swiftCode: 'SOLADEST',
       },
       {
         bankName: 'BayernLB (Bayerische Landesbank)',
-        swiftCode: 'BYLADEMMXXX',
+        swiftCode: 'BYLADEMM',
       },
       {
         bankName: 'Norddeutsche Landesbank (NORD/LB)',
-        swiftCode: 'NOLADE2HXXX',
+        swiftCode: 'NOLADE2H',
       },
       {
         bankName: 'Helaba (Landesbank Hessen-Thüringen)',
-        swiftCode: 'HELADEFFXXX',
+        swiftCode: 'HELADEFF',
       },
       {
         bankName: 'Hamburg Commercial Bank AG',
-        swiftCode: 'HSHNDEHHXXX',
+        swiftCode: 'HSHNDEHH',
       },
     ],
   },
@@ -390,23 +390,23 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'ABN AMRO Bank N.V.',
-        swiftCode: 'ABNANL2AXXX',
+        swiftCode: 'ABNANL2A',
       },
       {
         bankName: 'ASN Bank',
-        swiftCode: 'ASNBNL21XXX',
+        swiftCode: 'ASNBNL21',
       },
       {
         bankName: 'ING Bank N.V.',
-        swiftCode: 'INGBNL2AXXX',
+        swiftCode: 'INGBNL2A',
       },
       {
         bankName: 'Rabobank',
-        swiftCode: 'RABONL2UXXX',
+        swiftCode: 'RABONL2U',
       },
       {
         bankName: 'SNS Bank',
-        swiftCode: 'SNSBNL2AXXX',
+        swiftCode: 'SNSBNL2A',
       },
     ],
   },
@@ -427,15 +427,15 @@ export const INTL_BANKS = [
       },
       {
         bankName: 'Julius Baer Group',
-        swiftCode: 'BAERCHZZXXX',
+        swiftCode: 'BAERCHZZ',
       },
       {
         bankName: 'Raiffeisen Schweiz',
-        swiftCode: 'RAIFCH22XXX',
+        swiftCode: 'RAIFCH22',
       },
       {
         bankName: 'PostFinance',
-        swiftCode: 'POFICHBEXXX',
+        swiftCode: 'POFICHBE',
       },
     ],
   },
@@ -445,23 +445,23 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'Swedbank',
-        swiftCode: 'SWEDSESSXXX',
+        swiftCode: 'SWEDSESS',
       },
       {
         bankName: 'SEB (Skandinaviska Enskilda Banken)',
-        swiftCode: 'ESSESESSXXX',
+        swiftCode: 'ESSESESS',
       },
       {
         bankName: 'Handelsbanken',
-        swiftCode: 'HANDSESSXXX',
+        swiftCode: 'HANDSESS',
       },
       {
         bankName: 'Nordea Bank',
-        swiftCode: 'NDEASESSXXX',
+        swiftCode: 'NDEASESS',
       },
       {
         bankName: 'Ikano Bank',
-        swiftCode: 'IKANSE21XXX',
+        swiftCode: 'IKANSE21',
       },
     ],
   },
@@ -474,19 +474,19 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'BNP Paribas Fortis',
-        swiftCode: 'GEBABEBBXXX',
+        swiftCode: 'GEBABEBB',
       },
       {
         bankName: 'KBC Bank',
-        swiftCode: 'KREDBEBBXXX',
+        swiftCode: 'KREDBEBB',
       },
       {
         bankName: 'Belfius Bank',
-        swiftCode: 'GKCCBEBBXXX',
+        swiftCode: 'GKCCBEBB',
       },
       {
         bankName: 'ING Belgium',
-        swiftCode: 'BBRUBEBBXXX',
+        swiftCode: 'BBRUBEBB',
       },
       {
         bankName: 'Argenta',
@@ -503,23 +503,23 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'Erste Group Bank',
-        swiftCode: 'GIBAATWWXXX',
+        swiftCode: 'GIBAATWW',
       },
       {
         bankName: 'Raiffeisen Bank International',
-        swiftCode: 'RZBAATWWXXX',
+        swiftCode: 'RZBAATWW',
       },
       {
         bankName: 'UniCredit Bank Austria',
-        swiftCode: 'BKAUATWWXXX',
+        swiftCode: 'BKAUATWW',
       },
       {
         bankName: 'BAWAG P.S.K.',
-        swiftCode: 'BAWAATWWXXX',
+        swiftCode: 'BAWAATWW',
       },
       {
         bankName: 'Volksbank',
-        swiftCode: 'VBWEATW1XXX',
+        swiftCode: 'VBWEATW1',
       },
     ],
   },
@@ -529,20 +529,20 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'Caixa Geral de Depósitos',
-        swiftCode: 'CGDIPTPLXXX',
+        swiftCode: 'CGDIPTPL',
       },
-      { bankName: 'Banco Santander Totta', swiftCode: 'TOTAPTPLXXX' },
+      { bankName: 'Banco Santander Totta', swiftCode: 'TOTAPTPL' },
       {
         bankName: 'Millennium BCP',
-        swiftCode: 'BCOMPTPLXXX',
+        swiftCode: 'BCOMPTPL',
       },
       {
         bankName: 'Novo Banco',
-        swiftCode: 'NOVAPTPLXXX',
+        swiftCode: 'NOVAPTPL',
       },
       {
         bankName: 'Banco BPI',
-        swiftCode: 'BBPIPTPLXXX',
+        swiftCode: 'BBPIPTPL',
       },
     ],
   },
@@ -552,23 +552,23 @@ export const INTL_BANKS = [
     banks: [
       {
         bankName: 'DNB Bank ASA',
-        swiftCode: 'DNBANOKKXXX',
+        swiftCode: 'DNBANOKK',
       },
       {
         bankName: 'Handelsbanken',
-        swiftCode: 'HANDNOKKXXX',
+        swiftCode: 'HANDNOKK',
       },
       {
         bankName: 'SpareBank 1',
-        swiftCode: 'SPTRNOK1XXX',
+        swiftCode: 'SPTRNOK1',
       },
       {
         bankName: 'Nordea Bank Abp',
-        swiftCode: 'NDEANOKKXXX',
+        swiftCode: 'NDEANOKK',
       },
       {
         bankName: 'Santander Consumer Bank',
-        swiftCode: 'SCBANOKKXXX',
+        swiftCode: 'SCBANOKK',
       },
     ],
   },
