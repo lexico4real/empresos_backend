@@ -7,9 +7,12 @@ import { AccountModule } from './../account/account.module';
 import { TransactionRepository } from './transaction.repository';
 import { PassportModule } from '@nestjs/passport';
 import { IntlTransactionRepository } from './intl-transaction.repository';
+import { CacheService } from '../cache/cache.service';
+import { RedisModule } from '../redis.module';
 
 @Module({
   imports: [
+    RedisModule,
     TypeOrmModule.forFeature([
       TransactionRepository,
       IntlTransactionRepository,
@@ -18,6 +21,6 @@ import { IntlTransactionRepository } from './intl-transaction.repository';
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [TransferController],
-  providers: [TransferService, EmailService],
+  providers: [TransferService, EmailService, CacheService],
 })
 export class TransferModule {}

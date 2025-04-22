@@ -5,9 +5,11 @@ import { Connection } from 'typeorm';
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { TransactionRepository } from './transaction.repository';
 import { EmailService } from '../email/email.service';
-import { User } from 'src/auth/entities/user.entity';
+import { User } from '../auth/entities/user.entity';
 import { CreateIntlTransferDto } from './dto/create-intl-transfer.dto';
 import { IntlTransactionRepository } from './intl-transaction.repository';
+import { INTL_BANKS } from '../common/intl-banks';
+import { CacheService } from '../cache/cache.service';
 
 @Injectable()
 export class TransferService {
@@ -18,6 +20,7 @@ export class TransferService {
     private readonly intlTxnRepo: IntlTransactionRepository,
     private readonly emailService: EmailService,
     private readonly connection: Connection,
+    private readonly cacheService: CacheService,
   ) {}
 
   async transferMoney(dto: CreateTransferDto) {
@@ -102,5 +105,29 @@ export class TransferService {
       search,
       req,
     );
+  }
+
+  async getBank() {
+    const cacheKey = 'intl_banks';
+    const cachedData = await this.getFromCache(cacheKey);
+
+    if (cachedData && cachedData.length) {
+      return cachedData;
+    }
+
+    const data = INTL_BANKS;
+
+    await this.setInCache(cacheKey, data);
+
+    return data;
+  }
+
+  private async getFromCache(key: string) {
+    const cachedData = await this.cacheService.get(key);
+    return cachedData ? JSON.parse(cachedData) : null;
+  }
+
+  private async setInCache(key: string, data: any) {
+    await this.cacheService.set(key, JSON.stringify(data), 3600);
   }
 }

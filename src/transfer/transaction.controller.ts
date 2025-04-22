@@ -45,6 +45,11 @@ export class TransferController {
     );
   }
 
+  @Get('bank/list')
+  getBanks() {
+    return this.transferService.getBank();
+  }
+
   @Post('transfer/intl')
   initiateIntltransfer(@Body() dto: CreateIntlTransferDto) {
     return this.transferService.initiateIntlTransfer(dto);
