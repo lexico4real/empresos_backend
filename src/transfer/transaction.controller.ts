@@ -45,7 +45,7 @@ export class TransferController {
     );
   }
 
-  @Post('transfer/international')
+  @Post('transfer/intl')
   initiateIntltransfer(@Body() dto: CreateIntlTransferDto) {
     return this.transferService.initiateIntlTransfer(dto);
   }
