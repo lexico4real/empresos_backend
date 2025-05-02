@@ -24,11 +24,6 @@ import { CreateIntlTransferDto } from './dto/create-intl-transfer.dto';
 export class TransferController {
   constructor(private readonly transferService: TransferService) {}
 
-  @Post('transfer')
-  transferMoney(@Body() dto: CreateTransferDto, @Req() req: Request) {
-    return this.transferService.transferMoney(dto);
-  }
-
   @Get('history')
   getTransactionHistory(
     @Req() req: Request,
@@ -69,5 +64,33 @@ export class TransferController {
       search,
       req,
     );
+  }
+
+  @Get('history/local')
+  getLocalTransactionHistory(
+    @Req() req: Request,
+    page?: number,
+    perPage?: number,
+    search?: string,
+  ) {
+    return this.transferService.getTransactionHistory(
+      req?.user as User,
+      page,
+      perPage,
+      search,
+      req,
+    );
+  }
+
+  @Get('intl-transaction/total')
+  async getMonthlyIntlTransactionTotals(senderAccount: string) {
+    const transactions =
+      await this.transferService.getMonthlyIntlTransactionTotals(senderAccount);
+    return transactions;
+  }
+
+  @Post('transfer/local')
+  transferMoney(@Body() dto: CreateTransferDto, @Req() req: Request) {
+    return this.transferService.transferMoney(req, dto);
   }
 }

@@ -526,6 +526,9 @@ export const INTL_BANKS = [
   {
     country: 'Portugal',
     flag: 'https://flagcdn.com/w320/pt.png',
+    currency: 'Euro',
+    currencyCode: 'EUR',
+    currencySymbol: '€',
     banks: [
       {
         bankName: 'Caixa Geral de Depósitos',
@@ -548,7 +551,10 @@ export const INTL_BANKS = [
   },
   {
     country: 'Norway',
-    flag: '',
+    flag: 'https://flagcdn.com/w320/no.png',
+    currency: 'Euro',
+    currencyCode: 'EUR',
+    currencySymbol: '€',
     banks: [
       {
         bankName: 'DNB Bank ASA',

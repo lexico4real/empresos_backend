@@ -3,11 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
 import { Connection } from 'typeorm';
 import { CreateTransferDto } from './dto/create-transfer.dto';
-import { TransactionRepository } from './transaction.repository';
+import { TransactionRepository } from './repositories/local-transaction.repository';
 import { EmailService } from '../email/email.service';
 import { User } from '../auth/entities/user.entity';
 import { CreateIntlTransferDto } from './dto/create-intl-transfer.dto';
-import { IntlTransactionRepository } from './intl-transaction.repository';
+import { IntlTransactionRepository } from './repositories/intl-transaction.repository';
 import { INTL_BANKS } from '../common/intl-banks';
 import { CacheService } from '../cache/cache.service';
 
@@ -23,7 +23,7 @@ export class TransferService {
     private readonly cacheService: CacheService,
   ) {}
 
-  async transferMoney(dto: CreateTransferDto) {
+  async transferMoney(req: any, dto: CreateTransferDto) {
     const { sender, receiver, txn } = await this.txnRepo.transfer(
       this.connection,
       dto,
@@ -120,6 +120,13 @@ export class TransferService {
     await this.setInCache(cacheKey, data);
 
     return data;
+  }
+
+  async getMonthlyIntlTransactionTotals(senderAccount: string) {
+    const monthlyTotals =
+      await this.intlTxnRepo.getMonthlyIntlTransactionTotals(senderAccount);
+
+    return monthlyTotals;
   }
 
   private async getFromCache(key: string) {

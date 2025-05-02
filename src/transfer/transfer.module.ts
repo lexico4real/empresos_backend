@@ -4,9 +4,9 @@ import { TransferService } from './transaction.service';
 import { TransferController } from './transaction.controller';
 import { EmailService } from './../email/email.service';
 import { AccountModule } from './../account/account.module';
-import { TransactionRepository } from './transaction.repository';
+import { TransactionRepository } from './repositories/local-transaction.repository';
 import { PassportModule } from '@nestjs/passport';
-import { IntlTransactionRepository } from './intl-transaction.repository';
+import { IntlTransactionRepository } from './repositories/intl-transaction.repository';
 import { CacheService } from '../cache/cache.service';
 import { RedisModule } from '../redis.module';
 

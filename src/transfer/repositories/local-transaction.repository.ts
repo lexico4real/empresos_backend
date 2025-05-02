@@ -1,13 +1,13 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { Transaction } from './entities/transaction.entity';
-import { CreateTransferDto } from './dto/create-transfer.dto';
-import { Account } from './../account/entities/account.entity';
+import { Transaction } from '../entities/transaction.entity';
+import { CreateTransferDto } from '../dto/create-transfer.dto';
+import { Account } from '../../account/entities/account.entity';
 import { User } from 'src/auth/entities/user.entity';
 import { Request } from 'express';
 import { ILike, FindManyOptions } from 'typeorm';
-import { generatePagination } from '../common/util/pagination';
-import { CreateIntlTransferDto } from './dto/create-intl-transfer.dto';
+import { generatePagination } from '../../common/util/pagination';
+import { CreateIntlTransferDto } from '../dto/create-intl-transfer.dto';
 
 @EntityRepository(Transaction)
 export class TransactionRepository extends Repository<Transaction> {
