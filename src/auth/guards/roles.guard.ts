@@ -10,7 +10,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from './../decorators/roles.decorator';
 import { AuthService } from './../auth.service';
-import { Role } from 'src/common/enums/role.enum';
+import { RolesConstant as Role } from 'src/common/enums/role.enum';
 import Logger from 'src/config/log4js/logger';
 
 @Injectable()

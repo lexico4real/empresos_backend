@@ -1,4 +1,5 @@
-export enum Role {
-  ADMIN = 'ADMIN',
-  CUSTOMER = 'CUSTOMER',
+export enum RolesConstant {
+  ADMIN = 'admin',
+  CUSTOMER = 'customer',
+  STAFF = 'staff',
 }

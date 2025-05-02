@@ -13,7 +13,7 @@ export class UserRole extends BaseEntity {
 
   @ManyToMany(() => UserPrivilege, { cascade: true })
   @JoinTable()
-  user_privileges: UserPrivilege[];
+  userPrivileges: UserPrivilege[];
 
   @OneToMany(() => User, (user) => user.userRole)
   users: User[];

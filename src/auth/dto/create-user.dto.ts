@@ -12,7 +12,7 @@ import {
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { SecurityQuestions } from 'src/common/enums/security-questions.enum';
 import { AccountStatus } from 'src/common/enums/account-status.enum';
-import { Role } from 'src/common/enums/role.enum';
+import { RolesConstant as Role } from 'src/common/enums/role.enum';
 
 export class CreateUserDto {
   @ApiProperty()

@@ -24,7 +24,7 @@ import { EmailService } from './../email/email.service';
 import { UserRoleRepository } from './repositories/user-role.repository';
 import { UserPrivilegeRepository } from './repositories/user-privilege.repository';
 import { AccountService } from 'src/account/account.service';
-import { Role } from 'src/common/enums/role.enum';
+import { RolesConstant as Role } from 'src/common/enums/role.enum';
 import { generatePagination } from 'src/common/util/pagination';
 
 @Injectable()

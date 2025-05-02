@@ -18,7 +18,7 @@ import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AccessDto } from './dto/access.dto';
-import { Role } from 'src/common/enums/role.enum';
+import { RolesConstant as Role } from 'src/common/enums/role.enum';
 
 @ApiTags('users')
 @Controller('users')

@@ -7,6 +7,7 @@ import ClusterConfig from './config/system/cluster';
 import CorsConfig from './config/system/cors';
 import SwaggerConfig from './config/swagger/config';
 import { TransformInterceptor } from './config/interceptor/transform.interceptor';
+import { SeedService } from './seed/seed.service';
 
 async function bootstrap() {
   const cluster = new ClusterConfig();
@@ -21,6 +22,9 @@ async function bootstrap() {
   app.use(compression());
   app.useGlobalInterceptors(new TransformInterceptor());
   app.enableShutdownHooks();
+  if (process.env.NODE_ENV !== 'production') {
+    await app.get(SeedService).seed();
+  }
   await cluster.set(app);
 }
 bootstrap();
