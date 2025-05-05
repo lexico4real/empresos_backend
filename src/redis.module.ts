@@ -8,17 +8,9 @@ import Redis from 'ioredis';
     {
       provide: 'REDIS_CLIENT',
       useFactory: (configService: ConfigService) => {
-        const redisUrl = configService.get<string>('REDIS_URL');
-        if (redisUrl) {
-          return new Redis(redisUrl);
-        }
-
-        // fallback to local config
-        const host = configService.get<string>('REDIS_DB_HOST', '127.0.0.1');
-        const port = configService.get<number>('REDIS_DB_PORT', 6379);
-        const password = configService
-          .get<string>('REDIS_DB_AUTH', '')
-          ?.replace(/\\/g, '');
+        const host = process.env.REDIS_DB_HOST;
+        const port = Number(process.env.REDIS_DB_PORT);
+        const password = process.env.REDIS_DB_PASSWORD?.replace(/\\/g, '');
 
         return new Redis({
           host,

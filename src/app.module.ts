@@ -34,7 +34,7 @@ import { SeedModule } from './seed/seed.module';
       redis: {
         host: process.env.REDIS_DB_HOST,
         port: Number(process.env.REDIS_DB_PORT),
-        password: process.env.REDIS_DB_AUTH,
+        password: process.env.REDIS_DB_PASSWORD?.replace(/\\/g, ''),
       },
     }),
     SmsModule,
