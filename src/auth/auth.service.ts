@@ -102,8 +102,11 @@ export class AuthService {
     if (createUserDto.role === Role.CUSTOMER) {
       await this.accountService.createAccount(user);
     }
-    await this.cacheService.delWithPattern('get_customers_*');
-    await this.cacheService.delWithPattern('get_other_users_*');
+    await Promise.all([
+      this.cacheService.delWithPattern('get_customers_*'),
+      this.cacheService.delWithPattern('get_other_users_*'),
+    ]);
+
     await this.emailService.sendMail({
       to: user.email,
       subject: 'New Account',
@@ -338,8 +341,10 @@ export class AuthService {
     }
     await this.usersRepository.remove(user);
 
-    await this.cacheService.delWithPattern('get_customers_*');
-    await this.cacheService.delWithPattern('get_other_users_*');
+    await Promise.all([
+      this.cacheService.delWithPattern(`get_customers_*`),
+      this.cacheService.delWithPattern(`get_other_users_*`),
+    ]);
 
     return { message: 'User deleted successfully' };
   }
@@ -372,8 +377,10 @@ export class AuthService {
     }
     user.accountStatus = AccountStatus.ACTIVE;
     await this.usersRepository.save(user);
-    await this.cacheService.delWithPattern('get_customers_*');
-    await this.cacheService.delWithPattern('get_other_users_*');
+    await Promise.all([
+      this.cacheService.delWithPattern('get_customers_*'),
+      this.cacheService.delWithPattern('get_other_users_*'),
+    ]);
     return { message: 'User activated successfully' };
   }
 
@@ -393,8 +400,12 @@ export class AuthService {
 
     user.userRole = role;
     await this.usersRepository.save(user);
-    await this.cacheService.delWithPattern('get_customers_*');
-    await this.cacheService.delWithPattern('get_other_users_*');
+
+    await Promise.all([
+      this.cacheService.delWithPattern('get_customers_*'),
+      this.cacheService.delWithPattern('get_other_users_*'),
+    ]);
+
     return { message: 'User role updated successfully' };
   }
 }
