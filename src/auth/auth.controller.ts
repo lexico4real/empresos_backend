@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -49,6 +51,19 @@ export class AuthController {
   }
 
   @HttpCode(200)
+  @Post('otp-admin')
+  getLoginOTPAdmin(
+    @Body() authCredentialsDto: AuthCredentialsDto,
+    @Req() req: Request,
+  ) {
+    return this.authService.getLoginOTP(
+      authCredentialsDto,
+      req.user,
+      'not_customer',
+    );
+  }
+
+  @HttpCode(200)
   @Post('sign-in')
   validateLoginOtp(
     @Body() authCredentialsDto: AuthCredentialsDto,
@@ -69,13 +84,42 @@ export class AuthController {
     @Query('search') search: string,
     @Req() req: Request,
   ): Promise<any> {
-    return this.authService.getAllUsers(page, perPage, search, req);
+    return this.authService.getCustomers(page, perPage, search, req);
+  }
+
+  @UseGuards(AuthGuard())
+  @Get('admins')
+  async getAllAdmins(
+    @Query('page') page: number,
+    @Query('perPage') perPage: number,
+    @Query('search') search: string,
+    @Req() req: Request,
+  ): Promise<any> {
+    return this.authService.getOtherUsers(page, perPage, search, req);
   }
 
   @UseGuards(AuthGuard())
   @Post('role')
   async createRole(@Body() accessDto: AccessDto) {
     return await this.authService.createRole(accessDto);
+  }
+
+  @UseGuards(AuthGuard())
+  @Patch(':id/deactivate')
+  async deactivateUser(@Param('id') id: string) {
+    return await this.authService.deactivateUser(id);
+  }
+
+  @UseGuards(AuthGuard())
+  @Patch(':id/activate')
+  async activateUser(@Param('id') id: string) {
+    return await this.authService.activateUser(id);
+  }
+
+  @UseGuards(AuthGuard())
+  @Patch(':id/role')
+  async updateUserRole(@Param('id') id: string, @Body('role') role: Role) {
+    return await this.authService.updateUserRole(id, role);
   }
 
   @UseGuards(AuthGuard())
@@ -88,5 +132,12 @@ export class AuthController {
   @Post('role/privilege')
   async createPrivilege(@Body() accessDto: AccessDto) {
     return await this.authService.createPrivilege(accessDto);
+  }
+
+  @UseGuards(AuthGuard())
+  @Delete('delete')
+  async deleteUser(@Query('id') id: string) {
+    console.log({ id });
+    return await this.authService.deleteUser(id);
   }
 }

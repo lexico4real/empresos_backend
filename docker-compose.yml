@@ -5,7 +5,7 @@ services:
     build: .
     container_name: empresos-app
     ports:
-      - '3000:3000'
+      - '3030:3030'
     depends_on:
       - empresos-db
       - redis

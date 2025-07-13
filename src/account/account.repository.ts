@@ -1,7 +1,12 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Account } from './entities/account.entity';
 import { User } from './../auth/entities/user.entity';
+import { generatePagination } from 'src/common/util/pagination';
 
 @EntityRepository(Account)
 export class AccountRepository extends Repository<Account> {
@@ -32,10 +37,56 @@ export class AccountRepository extends Repository<Account> {
     return account;
   }
 
-  async updateBalance(accountNumber: string, amount: number) {
-    const account = await this.getByAccountNumber(accountNumber);
-    account.balance += amount;
-    return this.save(account);
+  async updateBalance(accountId: string, amount: number) {
+    const account = await this.findOne(accountId);
+
+    if (!account) {
+      throw new NotFoundException('Account not found');
+    }
+
+    account.balance = +account.balance + amount;
+    return await this.save(account);
+  }
+
+  async getAllAccounts(
+    page = 1,
+    perPage = 10,
+    search?: string,
+    req?: any,
+  ): Promise<any> {
+    try {
+      const skip = (page - 1) * perPage;
+
+      const query = this.createQueryBuilder('account').leftJoinAndSelect(
+        'account.user',
+        'user',
+      );
+
+      if (search) {
+        query.where(
+          'user.email ILIKE :search OR user.firstName ILIKE :search OR user.lastName ILIKE :search',
+          {
+            search: `%${search}%`,
+          },
+        );
+      }
+
+      query.orderBy('account.createdAt', 'DESC').skip(skip).take(perPage);
+
+      const [result, total] = await query.getManyAndCount();
+
+      for (const account of result) {
+        if (account.user) {
+          delete account.user.password;
+        }
+      }
+
+      return generatePagination(page, perPage, total, req, result);
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Something went wrong while fetching accounts',
+      );
+    }
   }
 
   private generateAccountNumber(): string {

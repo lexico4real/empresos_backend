@@ -9,10 +9,14 @@ import { User } from './../entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from './../dto/create-user.dto';
 import { isEmail } from 'class-validator';
+import { UserRole } from '../entities/user-role.entity';
 
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {
-  async registerAccount(createUserDto: CreateUserDto): Promise<User> {
+  async registerAccount(
+    createUserDto: CreateUserDto,
+    userRole?: UserRole,
+  ): Promise<User> {
     const { email, password } = createUserDto;
 
     const salt = await bcrypt.genSalt();
@@ -22,6 +26,7 @@ export class UsersRepository extends Repository<User> {
       ...createUserDto,
       email: email.toLowerCase(),
       password: hashedPassword,
+      userRole,
     });
 
     try {

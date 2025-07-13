@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { AccountRepository } from './account.repository';
@@ -25,7 +25,22 @@ export class AccountService {
     return await this.accountRepo.getByAccountNumber(accountNumber);
   }
 
-  async updateBalance(accountNumber: string, amount: number): Promise<Account> {
-    return await this.accountRepo.updateBalance(accountNumber, amount);
+  async updateBalance(accountId: string, amount: number): Promise<Account> {
+    if (typeof amount !== 'number' || isNaN(amount)) {
+      throw new BadRequestException('Invalid amount provided');
+    }
+    if (amount <= 0) {
+      throw new BadRequestException('Amount must be greater than zero');
+    }
+    return await this.accountRepo.updateBalance(accountId, amount);
+  }
+
+  async getAllAccounts(
+    page = 1,
+    perPage = 10,
+    search?: string,
+    req?: any,
+  ): Promise<any> {
+    return await this.accountRepo.getAllAccounts(page, perPage, search, req);
   }
 }

@@ -13,6 +13,10 @@ export class Account extends BaseEntity {
   @Column({ default: true })
   isActive: boolean;
 
-  @ManyToOne(() => User, (user) => user.accounts)
+  @ManyToOne(() => User, (user) => user.accounts, {
+    onDelete: 'CASCADE',
+    nullable: false,
+    eager: true,
+  })
   user: User;
 }

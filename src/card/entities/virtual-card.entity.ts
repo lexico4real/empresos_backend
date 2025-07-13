@@ -22,6 +22,9 @@ export class VirtualCard extends BaseEntity {
   @Column({ default: true })
   isActive: boolean;
 
-  @ManyToOne(() => User, (user) => user.virtualCards)
+  @ManyToOne(() => User, (user) => user.virtualCards, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
   user: User;
 }

@@ -7,8 +7,8 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3030
 
 ENV NODE_ENV=development
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:dev"]
