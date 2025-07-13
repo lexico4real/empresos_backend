@@ -98,6 +98,13 @@ export class CacheService {
     }
   }
 
+  async delWithPattern(pattern: string) {
+    const keys = await this.redisClient.keys(pattern);
+    if (keys.length > 0) {
+      await this.redisClient.del(...keys);
+    }
+  }
+
   async expire(key: string, duration: number): Promise<any> {
     try {
       return await this.redisClient.expire(key, duration);

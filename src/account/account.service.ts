@@ -16,10 +16,7 @@ export class AccountService {
   ) {}
 
   async createAccount(user: User): Promise<Account> {
-    const keys = await this.cacheService.keys('all_accounts_*');
-    for (const key of keys) {
-      await this.cacheService.del(key);
-    }
+    await this.cacheService.delWithPattern('all_accounts_*');
     return await this.accountRepo.createAccount(user);
   }
 
@@ -38,10 +35,7 @@ export class AccountService {
     if (amount <= 0) {
       throw new BadRequestException('Amount must be greater than zero');
     }
-    const keys = await this.cacheService.keys('all_accounts_*');
-    for (const key of keys) {
-      await this.cacheService.del(key);
-    }
+    await this.cacheService.delWithPattern('all_accounts_*');
     return await this.accountRepo.updateBalance(accountId, amount);
   }
 

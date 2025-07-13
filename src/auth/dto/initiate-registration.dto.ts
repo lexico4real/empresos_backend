@@ -11,6 +11,6 @@ export class InitiateRegistationDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  @MaxLength(10)
+  @MaxLength(11)
   phoneNumber: string;
 }

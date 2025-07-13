@@ -137,7 +137,6 @@ export class AuthController {
   @UseGuards(AuthGuard())
   @Delete('delete')
   async deleteUser(@Query('id') id: string) {
-    console.log({ id });
     return await this.authService.deleteUser(id);
   }
 }
