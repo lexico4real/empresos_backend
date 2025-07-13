@@ -17,9 +17,11 @@ import { UserPrivilegeRepository } from './repositories/user-privilege.repositor
 import { UserRoleRepository } from './repositories/user-role.repository';
 import { AccountModule } from './../account/account.module';
 import { CookieSessionModule } from 'nestjs-cookie-session';
+import { CacheModule } from 'src/cache/cache.module';
 
 @Module({
   imports: [
+    CacheModule,
     SmsModule,
     OtpModule,
     ConfigModule,

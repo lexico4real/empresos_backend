@@ -5,15 +5,21 @@ import { AccountRepository } from './account.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './../auth/entities/user.entity';
 import { Account } from './entities/account.entity';
+import { CacheService } from 'src/cache/cache.service';
 
 @Injectable()
 export class AccountService {
   constructor(
     @InjectRepository(AccountRepository)
     private readonly accountRepo: AccountRepository,
+    private readonly cacheService: CacheService,
   ) {}
 
   async createAccount(user: User): Promise<Account> {
+    const keys = await this.cacheService.keys('all_accounts_*');
+    for (const key of keys) {
+      await this.cacheService.del(key);
+    }
     return await this.accountRepo.createAccount(user);
   }
 
@@ -32,6 +38,10 @@ export class AccountService {
     if (amount <= 0) {
       throw new BadRequestException('Amount must be greater than zero');
     }
+    const keys = await this.cacheService.keys('all_accounts_*');
+    for (const key of keys) {
+      await this.cacheService.del(key);
+    }
     return await this.accountRepo.updateBalance(accountId, amount);
   }
 
@@ -41,6 +51,18 @@ export class AccountService {
     search?: string,
     req?: any,
   ): Promise<any> {
-    return await this.accountRepo.getAllAccounts(page, perPage, search, req);
+    const cacheKey = `all_accounts_${page}_${perPage}_${search ?? ''}`;
+    const cached = await this.cacheService.get(cacheKey);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+    const result = await this.accountRepo.getAllAccounts(
+      page,
+      perPage,
+      search,
+      req,
+    );
+    this.cacheService.set(cacheKey, JSON.stringify(result));
+    return result;
   }
 }

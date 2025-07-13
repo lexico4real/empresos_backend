@@ -31,6 +31,7 @@ import { generatePagination } from 'src/common/util/pagination';
 import { UserRole } from './entities/user-role.entity';
 import { AccountStatus } from 'src/common/enums/account-status.enum';
 import { use } from 'passport';
+import { CacheService } from 'src/cache/cache.service';
 
 @Injectable()
 export class AuthService {
@@ -46,6 +47,7 @@ export class AuthService {
     private smsService: SmsService,
     private otpService: OtpService,
     private readonly emailService: EmailService,
+    private readonly cacheService: CacheService,
   ) {}
 
   async initiateRegistration(initiateRegistationDto: InitiateRegistationDto) {
@@ -100,11 +102,11 @@ export class AuthService {
     if (createUserDto.role === Role.CUSTOMER) {
       await this.accountService.createAccount(user);
     }
-    // await this.emailService.sendMail({
-    //   to: user.email,
-    //   subject: 'New Account',
-    //   text: `Welcome ${user.firstName}! This is a confirmation of the New Account You opened with us.`,
-    // });
+    await this.emailService.sendMail({
+      to: user.email,
+      subject: 'New Account',
+      text: `Welcome ${user.firstName}! This is a confirmation of the New Account You opened with us.`,
+    });
   }
 
   async getLoginOTP(
@@ -149,11 +151,11 @@ export class AuthService {
       user,
     );
 
-    // await this.emailService.sendMail({
-    //   to: _email,
-    //   subject: 'Login OTP',
-    //   text: `Your Login OTP is ${token?.otp}`,
-    // });
+    await this.emailService.sendMail({
+      to: _email,
+      subject: 'Login OTP',
+      text: `Your Login OTP is ${token?.otp}`,
+    });
 
     return {
       secret: token?.secret || null,
@@ -228,7 +230,13 @@ export class AuthService {
     @Req() req: Request,
   ): Promise<any> {
     try {
-      console.log(await this.usersRepository.find());
+      const cacheKey = `get_customers_${page}_${perPage}_${search ?? ''}`;
+
+      const cached = await this.cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
       const skip = (page - 1) * perPage;
 
       const query = this.usersRepository
@@ -248,7 +256,11 @@ export class AuthService {
 
       for (const user of result) delete user.password;
 
-      return generatePagination(page, perPage, total, req, result);
+      const paginated = generatePagination(page, perPage, total, req, result);
+
+      await this.cacheService.set(cacheKey, JSON.stringify(paginated), 3600); // cache for 3600 seconds
+
+      return paginated;
     } catch (error) {
       throw new InternalServerErrorException('Something went wrong: AS-ERROR');
     }
@@ -261,6 +273,13 @@ export class AuthService {
     @Req() req: Request,
   ): Promise<any> {
     try {
+      const cacheKey = `get_other_users_${page}_${perPage}_${search ?? ''}`;
+
+      const cached = await this.cacheService.get(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+
       const skip = (page - 1) * perPage;
 
       const query = this.usersRepository
@@ -280,7 +299,11 @@ export class AuthService {
 
       for (const user of result) delete user.password;
 
-      return generatePagination(page, perPage, total, req, result);
+      const paginated = generatePagination(page, perPage, total, req, result);
+
+      await this.cacheService.set(cacheKey, JSON.stringify(paginated), 3600);
+
+      return paginated;
     } catch (error) {
       throw new InternalServerErrorException('Something went wrong: AS-ERROR');
     }
@@ -312,6 +335,10 @@ export class AuthService {
       throw new NotFoundException('User not found');
     }
     await this.usersRepository.remove(user);
+
+    await this.cacheService.del('get_customers_*');
+    await this.cacheService.del('get_other_users_*');
+
     return { message: 'User deleted successfully' };
   }
 
@@ -320,8 +347,19 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
+
+    if (user.accountStatus === AccountStatus.INACTIVE) {
+      return { message: 'User is already inactive' };
+    }
+
     user.accountStatus = AccountStatus.INACTIVE;
     await this.usersRepository.save(user);
+
+    await Promise.all([
+      this.cacheService.del('get_customers_*'),
+      this.cacheService.del('get_other_users_*'),
+    ]);
+
     return { message: 'User deactivated successfully' };
   }
 
@@ -332,6 +370,8 @@ export class AuthService {
     }
     user.accountStatus = AccountStatus.ACTIVE;
     await this.usersRepository.save(user);
+    await this.cacheService.del('get_customers_*');
+    await this.cacheService.del('get_other_users_*');
     return { message: 'User activated successfully' };
   }
 
@@ -351,6 +391,8 @@ export class AuthService {
 
     user.userRole = role;
     await this.usersRepository.save(user);
+    await this.cacheService.del('get_customers_*');
+    await this.cacheService.del('get_other_users_*');
     return { message: 'User role updated successfully' };
   }
 }

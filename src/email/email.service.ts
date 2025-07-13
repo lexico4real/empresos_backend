@@ -1,46 +1,39 @@
+import { Injectable, BadRequestException } from '@nestjs/common';
+import { Resend } from 'resend';
 import { SendEmailDto } from './email.dto';
-import { BadRequestException, Injectable } from '@nestjs/common';
-import * as nodemailer from 'nodemailer';
-// import { Transporter } from 'nodemailer';
 
 @Injectable()
 export class EmailService {
-  private transporter: nodemailer.Transporter;
+  private resend: Resend;
 
   constructor() {
-    const { EMAIL_USER, EMAIL_PASS, EMAIL_SERVER } = process.env;
-    if (!EMAIL_USER || !EMAIL_PASS) {
-      throw new BadRequestException('Environment secret missing');
+    const { RESEND_API_KEY } = process.env;
+
+    if (!RESEND_API_KEY) {
+      throw new BadRequestException(
+        'RESEND_API_KEY is not set in environment variables',
+      );
     }
-    this.transporter = nodemailer.createTransport({
-      service: EMAIL_SERVER,
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-      debug: true,
-    });
+
+    this.resend = new Resend(RESEND_API_KEY);
   }
 
   async sendMail(sendEmailDto: SendEmailDto) {
     const { to, subject, text, html } = sendEmailDto;
+
     try {
-      const mailOptions = {
-        from: `"Empresos" <${process.env.EMAIL_USER}>`,
+      const response = await this.resend.emails.send({
+        from: 'Empresos <onboarding@resend.dev>',
         to,
         subject,
         text,
         html,
-      };
+      });
 
-      const info = await this.transporter.sendMail(mailOptions);
-      return info;
+      return response;
     } catch (error) {
-      console.error('Email sending failed:', error);
-      throw error;
+      console.error('Email sending failed via Resend:', error);
+      throw new BadRequestException('Failed to send email');
     }
   }
 }

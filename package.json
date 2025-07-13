@@ -57,6 +57,7 @@
     "qrcode": "^1.5.1",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
+    "resend": "^4.6.0",
     "rimraf": "^3.0.2",
     "rxjs": "^6.0.0",
     "typeorm": "^0.2.7"

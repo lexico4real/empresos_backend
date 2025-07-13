@@ -115,4 +115,23 @@ export class CacheService {
       return null;
     }
   }
+
+  async has(key: string): Promise<boolean> {
+    try {
+      const exists = await this.redisClient.exists(key);
+      return exists === 1;
+    } catch (e) {
+      this.logger.log(this.logName, 'error', e, this.logFileName);
+      return false;
+    }
+  }
+
+  async keys(pattern: string): Promise<string[]> {
+    try {
+      return await this.redisClient.keys(pattern);
+    } catch (e) {
+      this.logger.log(this.logName, 'error', e, this.logFileName);
+      return [];
+    }
+  }
 }

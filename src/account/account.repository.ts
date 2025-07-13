@@ -44,7 +44,7 @@ export class AccountRepository extends Repository<Account> {
       throw new NotFoundException('Account not found');
     }
 
-    account.balance = +account.balance + amount;
+    account.balance = amount;
     return await this.save(account);
   }
 
