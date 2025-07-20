@@ -18,6 +18,7 @@ import { TransferModule } from './transfer/transfer.module';
 import { getTypeOrmConfig } from './config/orm/global';
 import { CardModule } from './card/card.module';
 import { SeedModule } from './seed/seed.module';
+import { ConfigurationModule } from './configuration/configuration.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { SeedModule } from './seed/seed.module';
     TransferModule,
     CardModule,
     SeedModule,
+    ConfigurationModule,
   ],
   controllers: [AppController],
   providers: [
