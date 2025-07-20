@@ -8,12 +8,18 @@ import {
   Delete,
   Req,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { ConfigurationService } from './configuration.service';
 import { CreateConfigurationDto } from './dto/create-configuration.dto';
 import { UpdateConfigurationDto } from './dto/update-configuration.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
+@ApiTags('configuration')
+@UseGuards(AuthGuard())
+@ApiBearerAuth('token')
 @Controller('configuration')
 export class ConfigurationController {
   constructor(private readonly configurationService: ConfigurationService) {}
