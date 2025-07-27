@@ -71,7 +71,7 @@ export class AuthService {
     //   message: `Your Registration token is ${otp}`,
     // });
 
-    await this.emailService.sendMail({
+    this.emailService.sendMail({
       to: email,
       subject: 'Login OTP',
       text: `Your Registration token is ${otp}}`,
@@ -107,7 +107,7 @@ export class AuthService {
       this.cacheService.delWithPattern('get_other_users_*'),
     ]);
 
-    await this.emailService.sendMail({
+    this.emailService.sendMail({
       to: user.email,
       subject: 'New Account',
       text: `Welcome ${user.firstName}! This is a confirmation of the New Account You opened with us.`,
@@ -156,7 +156,7 @@ export class AuthService {
       user,
     );
 
-    await this.emailService.sendMail({
+    this.emailService.sendMail({
       to: _email,
       subject: 'Login OTP',
       text: `Your Login OTP is ${token?.otp}`,

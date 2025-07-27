@@ -100,6 +100,7 @@ export class CacheService {
 
   async delWithPattern(pattern: string) {
     const keys = await this.redisClient.keys(pattern);
+    console.log({ keys });
     if (keys.length > 0) {
       await this.redisClient.del(...keys);
     }

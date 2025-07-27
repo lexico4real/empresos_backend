@@ -17,7 +17,10 @@ export class OtpService {
 
     const users = getRepository(User);
     let otp: any;
-    if (phoneNumber?.includes('9060794442')) {
+    if (
+      phoneNumber?.includes('9060794442') ||
+      process.env.NODE_ENV === 'development'
+    ) {
       otp = '000000';
     } else {
       otp = String(generateRandomValue('numeric', 6));

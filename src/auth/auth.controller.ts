@@ -47,6 +47,7 @@ export class AuthController {
     @Body() authCredentialsDto: AuthCredentialsDto,
     @Req() req: Request,
   ) {
+    console.log({ object: req });
     return this.authService.getLoginOTP(authCredentialsDto, req.user);
   }
 

@@ -39,6 +39,7 @@ export class IntlTransactionRepository extends Repository<IntlTransaction> {
         throw new BadRequestException('Insufficient funds');
 
       sender.balance -= amount;
+      dto.senderName = `${sender.user.firstName} ${sender.user.lastName}`;
 
       await queryRunner.manager.save(sender);
 
@@ -150,5 +151,37 @@ export class IntlTransactionRepository extends Repository<IntlTransaction> {
     });
 
     return monthlyData;
+  }
+
+  async getAllIntlTransactions(
+    accountNumber?: string,
+    page = 1,
+    perPage = 10,
+    search?: string,
+    req?: Request,
+  ) {
+    const skip = (page - 1) * perPage;
+    let where: FindManyOptions['where'];
+    if (accountNumber) {
+      where = [
+        {
+          senderAccount: accountNumber,
+          ...(search && { narration: ILike(`%${search}%`) }),
+        },
+        {
+          receiverAccount: accountNumber,
+          ...(search && { narration: ILike(`%${search}%`) }),
+        },
+      ];
+    } else {
+      where = search ? { narration: ILike(`%${search}%`) } : {};
+    }
+    const [transactions, total] = await this.findAndCount({
+      where,
+      order: { createdAt: 'DESC' },
+      skip,
+      take: perPage,
+    });
+    return generatePagination(page, perPage, total, req, transactions);
   }
 }

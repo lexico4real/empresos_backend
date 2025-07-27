@@ -42,6 +42,9 @@ export class TransferService {
       }),
     ]);
 
+    await this.cacheService.del(`txn_${txn.id}`);
+    await this.cacheService.delWithPattern('all_accounts_*');
+
     return {
       success: true,
       message: 'Transfer completed',
@@ -83,6 +86,9 @@ export class TransferService {
         text: `You have been credited $${txn.amount} from ${sender.user.firstName} ${sender.user.lastName}. Narration: ${txn.narration}`,
       }),
     ]);
+
+    await this.cacheService.del(`txn_${txn.id}`);
+    await this.cacheService.delWithPattern('all_accounts_*');
 
     return {
       transactionId: txn.id,
@@ -127,6 +133,22 @@ export class TransferService {
       await this.intlTxnRepo.getMonthlyIntlTransactionTotals(senderAccount);
 
     return monthlyTotals;
+  }
+
+  async getAllIntlTransactions(
+    accountNumber?: string,
+    page?: number,
+    perPage?: number,
+    search?: string,
+    req?: Request,
+  ) {
+    return await this.intlTxnRepo.getAllIntlTransactions(
+      accountNumber,
+      page,
+      perPage,
+      search,
+      req,
+    );
   }
 
   private async getFromCache(key: string) {
