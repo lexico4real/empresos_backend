@@ -17,7 +17,7 @@ services:
     volumes:
       - .:/usr/src/app         # Bind source code for live reload
       - /usr/src/app/node_modules  # Prevent overwriting node_modules
-    command: npm run start:dev
+    command: npm run start
 
   empresos-db:
     image: postgres:15

@@ -8,6 +8,8 @@ import CorsConfig from './config/system/cors';
 import SwaggerConfig from './config/swagger/config';
 import { TransformInterceptor } from './config/interceptor/transform.interceptor';
 import { SeedService } from './seed/seed.service';
+import { User } from './auth/entities/user.entity';
+import { getConnection } from 'typeorm';
 
 async function bootstrap() {
   const cluster = new ClusterConfig();
@@ -23,7 +25,15 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   app.enableShutdownHooks();
   if (process.env.NODE_ENV !== 'production') {
-    await app.get(SeedService).seed();
+    const connection = getConnection();
+    const userRepo = connection.getRepository(User);
+    const count = await userRepo.count();
+    if (count === 0) {
+      console.log('🔄 Seeding database...');
+      await app.get(SeedService).seed();
+    } else {
+      console.log(`✅ Skipping seed — ${count} users already exist.`);
+    }
   }
   await cluster.set(app);
 }

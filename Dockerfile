@@ -11,4 +11,4 @@ EXPOSE 3030
 
 ENV NODE_ENV=development
 
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start"]
